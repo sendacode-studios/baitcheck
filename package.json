@@ -1,0 +1,41 @@
+{
+  "name": "baitcheck",
+  "version": "0.1.0",
+  "description": "Score a GitHub bounty issue for AI-agent honeypot risk before you spend compute on it. Zero runtime dependencies.",
+  "type": "module",
+  "bin": {
+    "baitcheck": "bin/cli.js"
+  },
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test \"test/*.test.js\"",
+    "survey": "node scripts/survey.js"
+  },
+  "keywords": [
+    "github",
+    "bounty",
+    "honeypot",
+    "ai-agent",
+    "supply-chain",
+    "security",
+    "static-analysis",
+    "cli"
+  ],
+  "author": "sendacode-studios",
+  "license": "MIT",
+  "files": [
+    "bin",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sendacode-studios/baitcheck.git"
+  }
+}

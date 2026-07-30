@@ -1,0 +1,41 @@
+# DigitalOcean App Platform spec.
+#
+# Deploy:
+#   doctl apps create --spec app.yaml
+#
+# GITHUB_TOKEN must be set as an encrypted app-level secret, not committed here.
+# Without it the service falls back to GitHub's 60 req/hour anonymous budget and
+# scans fail closed to UNVERIFIED — correct, but not useful under load.
+name: baitcheck
+region: nyc
+
+services:
+  - name: api
+    instance_size_slug: apps-s-1vcpu-0.5gb
+    instance_count: 1
+    http_port: 8080
+
+    github:
+      repo: sendacode-studios/baitcheck
+      branch: main
+      deploy_on_push: true
+
+    environment_slug: node-js
+    run_command: node src/server.js
+
+    envs:
+      - key: GITHUB_TOKEN
+        scope: RUN_TIME
+        type: SECRET
+      - key: CACHE_TTL_MS
+        scope: RUN_TIME
+        value: "600000"
+
+    health_check:
+      http_path: /healthz
+      initial_delay_seconds: 10
+      period_seconds: 30
+      failure_threshold: 3
+
+    routes:
+      - path: /

@@ -1,0 +1,5 @@
+node_modules/
+*.log
+data-smoke/
+.env
+.DS_Store
