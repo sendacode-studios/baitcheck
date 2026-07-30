@@ -1,0 +1,29 @@
+{
+  "actorSpecification": 1,
+  "fields": {},
+  "views": {
+    "overview": {
+      "title": "Verdicts",
+      "transformation": {
+        "fields": ["target", "verdict", "risk", "recommendation", "title"]
+      },
+      "display": {
+        "component": "table",
+        "properties": {
+          "target": { "label": "Target", "format": "text" },
+          "verdict": { "label": "Verdict", "format": "text" },
+          "risk": { "label": "Risk", "format": "number" },
+          "recommendation": { "label": "What to do", "format": "text" },
+          "title": { "label": "Issue title", "format": "text" }
+        }
+      }
+    },
+    "evidence": {
+      "title": "Signals and evidence",
+      "transformation": {
+        "fields": ["target", "verdict", "signals"]
+      },
+      "display": { "component": "table" }
+    }
+  }
+}

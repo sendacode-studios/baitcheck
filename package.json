@@ -14,7 +14,9 @@
   },
   "scripts": {
     "test": "node --test \"test/*.test.js\"",
-    "survey": "node scripts/survey.js"
+    "survey": "node scripts/survey.js",
+    "serve": "node src/server.js",
+    "actor": "node src/actor.js"
   },
   "keywords": [
     "github",

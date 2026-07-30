@@ -1,0 +1,45 @@
+{
+  "title": "baitcheck input",
+  "description": "Vet one or more GitHub repositories or issues for signs that they exist to harvest work from automated contributors.",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "targets": {
+      "title": "Targets to vet",
+      "type": "array",
+      "description": "GitHub repositories or issues to check. Accepts three forms: 'owner/repo#123' for a specific issue, 'owner/repo' for a repository-level check, or a full github.com issue URL. Pass the exact repository or issue you are about to work on — do not pass a search query or a topic name.",
+      "editor": "stringList",
+      "prefill": ["markeetakeawe2/etcd#1", "facebook/react"],
+      "minItems": 1,
+      "maxItems": 50
+    },
+    "githubToken": {
+      "title": "GitHub token",
+      "type": "string",
+      "description": "A GitHub personal access token with public read scope. Optional, but without one GitHub allows only 60 requests per hour and checks will return the verdict UNVERIFIED instead of a conclusive answer. No write scopes are needed or used.",
+      "editor": "textfield",
+      "isSecret": true
+    },
+    "failOnRisk": {
+      "title": "Minimum verdict to treat as a failure",
+      "type": "string",
+      "description": "Which verdict should mark the run as failed, so a calling workflow can stop. TRAP fails only on clear honeypot indicators. SUSPECT also fails when the payer cannot be verified. UNVERIFIED fails unless provenance positively checks out, which is the strictest setting.",
+      "editor": "select",
+      "enum": ["never", "TRAP", "SUSPECT", "UNVERIFIED"],
+      "enumTitles": [
+        "never — always succeed, just report",
+        "TRAP — fail on honeypot indicators",
+        "SUSPECT — fail unless the payer is verifiable",
+        "UNVERIFIED — fail unless provenance checks out"
+      ],
+      "default": "TRAP"
+    },
+    "deep": {
+      "title": "Deep check",
+      "type": "boolean",
+      "description": "Also look up contributors, policy documents, and whether a far more popular project shares this repository's name. Costs a few extra API calls per target but is what catches an imported clone of a well-known project, since GitHub reports fork:false for those.",
+      "default": true
+    }
+  },
+  "required": ["targets"]
+}

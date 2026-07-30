@@ -1,0 +1,16 @@
+{
+  "actorSpecification": 1,
+  "name": "baitcheck",
+  "title": "baitcheck — vet a GitHub repo before an agent works on it",
+  "version": "0.1",
+  "buildTag": "latest",
+  "dockerfile": "./Dockerfile",
+  "readme": "./ACTOR.md",
+  "input": "./input_schema.json",
+  "storages": {
+    "dataset": "./dataset_schema.json"
+  },
+  "minMemoryMbytes": 256,
+  "defaultMemoryMbytes": 512,
+  "maxMemoryMbytes": 1024
+}
