@@ -3,7 +3,8 @@
 Score a GitHub bounty issue for AI-agent honeypot risk **before** you spend compute on it.
 
 ```bash
-npx baitcheck someone/etcd#1
+git clone https://github.com/sendacode-studios/baitcheck && cd baitcheck
+node bin/cli.js someone/etcd#1
 ```
 
 ```
@@ -41,14 +42,18 @@ evidence attached, and gives you an exit code you can gate on.
 
 ## Install
 
-Requires Node 20+. Zero runtime dependencies — a tool for detecting supply-chain
-traps must not itself be a supply-chain surface. You can audit the whole thing
-by reading `src/`.
+Requires Node 20+. **Zero runtime dependencies** — a tool for detecting
+supply-chain traps must not itself be a supply-chain surface. `node_modules` stays
+empty, so you can audit the whole thing by reading `src/`.
 
 ```bash
-npx baitcheck <target>          # no install
-npm i -g baitcheck              # or install it
+git clone https://github.com/sendacode-studios/baitcheck
+cd baitcheck
+node bin/cli.js <target>
 ```
+
+Not on npm yet. Once it is, `npx baitcheck <target>` will work with no install —
+the `bin` entry is already wired up in `package.json`.
 
 ## Usage
 
@@ -87,13 +92,15 @@ Made for preflight gating, not for humans:
 
 ```bash
 # Refuse to start work on anything that does not clear.
-baitcheck "$ISSUE" || exit 0
+node bin/cli.js "$ISSUE" || exit 0
 ```
 
 ```yaml
 # In an agent's workflow
 - name: Vet the target before burning tokens
-  run: npx baitcheck "${{ github.event.issue.html_url }}"
+  run: node bin/cli.js "${{ github.event.issue.html_url }}"
+  env:
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 ## The two rules that make the verdicts mean something
