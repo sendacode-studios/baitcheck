@@ -115,10 +115,21 @@ async function main() {
   return result.exitCode;
 }
 
+/**
+ * Set `exitCode` and let the loop drain rather than calling `process.exit()`.
+ *
+ * Exiting eagerly here crashed on Windows: a scan that fails fast (a 404 on the
+ * first request) reached `process.exit()` while a fetch socket was still mid
+ * close, tripping `Assertion failed: !(handle->flags & UV_HANDLE_CLOSING)` in
+ * libuv. It only ever reproduced on the shortest code path, because longer
+ * scans gave the sockets time to settle.
+ */
 main().then(
-  (code) => process.exit(code),
+  (code) => {
+    process.exitCode = code;
+  },
   (err) => {
     process.stderr.write(`baitcheck: unexpected failure: ${err.stack || err}\n`);
-    process.exit(70);
+    process.exitCode = 70;
   },
 );

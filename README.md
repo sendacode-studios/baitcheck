@@ -185,7 +185,7 @@ paid open-source work in general.
 ## Development
 
 ```bash
-npm test        # 25 offline tests, no network or token required
+npm test        # 31 offline tests, no network or token required
 ```
 
 Signals are pure functions of a `Subject` snapshot, so the risk logic is
